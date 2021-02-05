@@ -15,6 +15,7 @@ const initialState = {
     playlist: [],
   },
   player: {
+    selectedSong: null,
     queue: [],
     currentlyPlaying: false,
   },

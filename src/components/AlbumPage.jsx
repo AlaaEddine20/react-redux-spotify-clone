@@ -34,9 +34,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "ADD_TO_FAVOURITES", payload: album }),
   removeFavorite: (id) =>
     dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: id }),
+  nowPlaying: (song) => dispatch({ type: "NOW_PLAYING", payload: song }),
 });
 
 class AlbumPage extends React.Component {
+  state = {
+    songSelected: null,
+  };
+
   async componentDidMount() {
     this.props.toggleLoad(true);
     await this.props.assignAlbum(164869492);
@@ -55,14 +60,12 @@ class AlbumPage extends React.Component {
               src={selectedAlbum.cover_big}
               alt=""
             />
-            {this.props.users.find(
+            {this.props.user.liked.find(
               (album) => album.id === this.props.user.liked.id
             ) ? (
               <Button
                 variant="danger"
-                onClick={() =>
-                  this.props.removeFavorite(selectedAlbum.id)
-                }
+                onClick={() => this.props.removeFavorite(selectedAlbum.id)}
               >
                 Remove from liked list
               </Button>
@@ -81,7 +84,10 @@ class AlbumPage extends React.Component {
               </h2>
               <ul>
                 {songList.map((track) => (
-                  <li className="d-flex justify-content-between">
+                  <li
+                    onClick={() => this.props.nowPlaying(track)}
+                    className="d-flex justify-content-between"
+                  >
                     {track.title} <span>{track.duration}</span>
                   </li>
                 ))}

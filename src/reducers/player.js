@@ -3,8 +3,8 @@ export default function nowPlaying(state = initialState, action) {
   switch (action.type) {
     case "NOW_PLAYING":
       return {
-        ...state.songs,
-        currentSong: action.payload,
+        ...state,
+        selectedSong: action.payload,
       };
     case "IN_QUEUE":
       return state.filter((song) => song.id !== action.payload);
