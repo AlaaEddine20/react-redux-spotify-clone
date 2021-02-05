@@ -3,7 +3,7 @@ export default function nowPlaying(state = initialState, action) {
   switch (action.type) {
     case "NOW_PLAYING":
       return {
-        ...state,
+        ...state.songs,
         currentSong: action.payload,
       };
     case "IN_QUEUE":

@@ -1,5 +1,5 @@
 import initialState from "../store";
-export default function (state = initialState, action) {
+export default function ui(state = initialState, action) {
   switch (action.type) {
     case "POPULATE_ARTISTS":
       return {
