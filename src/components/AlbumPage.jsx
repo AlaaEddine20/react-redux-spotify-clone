@@ -1,9 +1,11 @@
 import React from "react";
+import Player from "../components/Player";
 
 class AlbumPage extends React.Component {
   state = {
     album: {},
     tracks: [],
+    songSelected: null,
     loading: true,
   };
 
@@ -29,6 +31,8 @@ class AlbumPage extends React.Component {
       console.log(error);
     }
   };
+
+  changeSong = (id) => this.setState({ songSelected: id });
 
   async componentDidMount() {
     this.fetchAlbum(this.props.match.params.id);
@@ -58,6 +62,11 @@ class AlbumPage extends React.Component {
                 ))}
               </ul>
             </div>
+            <Player
+              songs={this.state.tracks}
+              songSelected={this.state.songSelected}
+              changeSong={this.changeSong}
+            />
           </div>
         )}
         {loading && <h1>Loading...</h1>}

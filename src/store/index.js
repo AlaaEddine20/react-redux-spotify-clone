@@ -16,7 +16,7 @@ const initialState = {
   },
   player: {
     queue: [],
-    currentSong: {},
+    currentlyPlaying: false,
   },
   ui: {
     artists: [],

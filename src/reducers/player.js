@@ -1,10 +1,13 @@
 import initialState from "../store";
-export default function (state = initialState, action) {
+export default function nowPlaying(state = initialState, action) {
   switch (action.type) {
-    case "ADD_TO_FAVOURITES":
-      return state.concat(action.payload);
-    case "REMOVE_FROM_FAVOURITES":
-      return state.filter((job) => job.id !== action.payload);
+    case "NOW_PLAYING":
+      return {
+        ...state,
+        currentSong: action.payload,
+      };
+    case "IN_QUEUE":
+      return state.filter((song) => song.id !== action.payload);
     default:
       return state;
   }
