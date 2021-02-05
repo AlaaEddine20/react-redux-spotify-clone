@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Jumbotron,Button,Row,Col,Container,Image} from "react-bootstrap";
+import { Jumbotron,Button,Row,Col,Container,Image,Link} from "react-bootstrap";
 import {FaPlayCircle } from 'react-icons/fa';
 import {AiOutlineHeart } from 'react-icons/ai';
 import { connect } from "react-redux";
@@ -88,34 +88,10 @@ const mapStateToProps = (state) => state;
 
 
 class artistPage extends React.Component {
-  state = {
- 
-    loading: true,
-  };
-
-
-
-  fetchTracks = async (id) => {
-    try {
-        
-      const url = "https://deezerdevs-deezer.p.rapidapi.com/artist/";
-      const resp = await fetch(url + id +"/top?limit=50", {
-        headers: {
-          "x-rapidapi-key":
-            "7058b459femsh8bbc3e5e09ff45bp16ae10jsnaa8151340a4c",
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-        },
-      });
-      console.log(resp);
-      const respObj = await resp.json();
-      console.log("tracks:",respObj.data);
-      this.setState({
-        tracks:respObj.data
-      });
-    } catch (error) {
-      console.log(error);
+    state={
+        show:10
     }
-  };
+ 
 
   async componentDidMount() {
       console.log("Im from artist")
@@ -156,7 +132,7 @@ class artistPage extends React.Component {
                Popular 
               </h5>
 
-{tracks.slice(0,10).map((track) => (
+{tracks.slice(0,this.state.show).map((track) => (
 
 
 <div className="d-flex track"  >
@@ -176,6 +152,15 @@ class artistPage extends React.Component {
 </div>
 </div>
 ))}
+<a className="btn-sidebar" 
+                        onClick={() =>
+						this.state.show === "10"
+							? this.setState({ show: "15" })
+							: this.setState({ show: "10" })
+					}
+				>
+					{this.state.show === "10" ? <p>See More</p> : <p>See less </p>}{" "}
+				</a>
 
 </div>
 </Col>
