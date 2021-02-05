@@ -45,7 +45,8 @@ const mapDispatchToProps = (dispatch) => ({
 class AlbumPage extends React.Component {
   async componentDidMount() {
     this.props.toggleLoad(true);
-    await this.props.assignAlbum(164869492);
+
+    await this.props.assignAlbum(this.props.match.params.id);
     await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
     this.props.toggleLoad(false);
   }
@@ -58,7 +59,9 @@ class AlbumPage extends React.Component {
     return (
       <>
         {!this.props.ui.loading && (
-          <div className="album-page ">
+
+          <div className="album-page">
+
             <Container>
               <img
                 style={{ marginLeft: 100, width: 400, height: 400 }}

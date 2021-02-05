@@ -7,10 +7,11 @@ import {
   Button,
   Form,
   Card,
+  Image,
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-
+import { Link } from "react-router-dom";
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
@@ -45,7 +46,25 @@ class Library extends Component {
             <h2 className="libTitle">Liked</h2>
           </Col>
         </Row>
-        <Row>{/* MAP LIKED ARRAY HERE ERLENS*/}</Row>
+        <Row className="w-100">
+          {this.props.user &&
+            this.props.user.liked.map((album, index) => (
+              //   console.log(album)
+              <Row className="albums-wrapper mx-2 my-3" key={index}>
+                <Col className="item-wrapper">
+                  <Link
+                    to={`/album/${album.id}`}
+                    style={{ textDecoration: "none", color: "lightgrey" }}
+                  >
+                    <Image className="album-cover" src={album.cover} />
+                    <h4 className="d-flex justify-content-center mt-2 album-title">
+                      {album.title}
+                    </h4>
+                  </Link>
+                </Col>
+              </Row>
+            ))}
+        </Row>
         <Row>
           <Col xs={12}>
             <h2 className="libTitle">
