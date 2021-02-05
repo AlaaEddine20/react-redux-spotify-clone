@@ -12,13 +12,7 @@ const initialState = {
     username: "",
     password: "",
     email: "",
-    playlist: [],
-    playlists: [
-      {
-        name: "",
-        tracklist: [],
-      },
-    ],
+    playlists: [],
   },
   player: {
     queue: [],
