@@ -8,19 +8,8 @@ import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 
+
 const mapDispatchToProps = (dispatch) => ({
-  setLocation: (location) =>
-    // fetch the data
-    dispatch({
-      type: "SET_LOCATION",
-      payload: location,
-    }),
-  setPosition: (position) =>
-    // fetch the data
-    dispatch({
-      type: "SET_POSITION",
-      payload: position,
-    }),
   fetchTrackswithThunk: (id) =>
     dispatch(async (dispatch) => {
       const url = "https://deezerdevs-deezer.p.rapidapi.com/artist/";
@@ -39,6 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch({
           type: "SET_TOP_ALBUMS",
           payload: tracks.data,
+
         });
       } else {
         dispatch({
@@ -113,7 +103,12 @@ class artistPage extends React.Component {
     this.props.fetchAlbumswithThunk(this.props.match.params.id);
   }
   render() {
-    const { artist, tracks } = this.props.ui;
+
+    
+    const { artist,tracks} = this.props.ui;
+
+   
+
 
     return (
       <>
