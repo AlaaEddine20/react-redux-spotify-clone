@@ -55,14 +55,12 @@ class AlbumPage extends React.Component {
               src={selectedAlbum.cover_big}
               alt=""
             />
-            {this.props.users.find(
+            {this.props.user.liked.find(
               (album) => album.id === this.props.user.liked.id
             ) ? (
               <Button
                 variant="danger"
-                onClick={() =>
-                  this.props.removeFavorite(selectedAlbum.id)
-                }
+                onClick={() => this.props.removeFavorite(selectedAlbum.id)}
               >
                 Remove from liked list
               </Button>
