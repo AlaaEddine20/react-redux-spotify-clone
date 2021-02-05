@@ -19,18 +19,22 @@ const mapDispatchToProps = (dispatch) => ({
       type: "GENERATE_PLAYLIST",
       payload: { name: name, tracklist: [] },
     }),
+  showModal: (load) =>
+    dispatch({
+      type: "TOGGLE_MODAL",
+      payload: load,
+    }),
 });
 
 class Library extends Component {
   state = {
-    showModal: false,
     name: "",
   };
 
   submitPlaylist = async (e) => {
     e.preventDefault();
     await this.props.generatePlaylist(this.state.name);
-    this.setState({ showModal: false, name: "" });
+    this.props.showModal(false);
   };
 
   render() {
@@ -49,7 +53,7 @@ class Library extends Component {
               <PlaylistAddIcon
                 fontSize="large"
                 className="addPlayIcon"
-                onClick={() => this.setState({ showModal: true })}
+                onClick={() => this.props.showModal(true)}
               />
             </h2>
           </Col>
@@ -70,8 +74,8 @@ class Library extends Component {
             ))}
         </Row>
         <Modal
-          show={this.state.showModal}
-          onHide={() => this.setState({ showModal: false })}
+          show={this.props.user.showModal}
+          onHide={() => this.props.showModal(false)}
         >
           <Modal.Header closeButton>
             <Modal.Title>New Playlist</Modal.Title>
@@ -89,7 +93,7 @@ class Library extends Component {
           <Modal.Footer>
             <Button
               variant="secondary"
-              onClick={() => this.setState({ showModal: false })}
+              onClick={() => this.props.showModal(false)}
             >
               Discard
             </Button>

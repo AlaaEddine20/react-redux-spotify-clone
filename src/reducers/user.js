@@ -11,6 +11,11 @@ export default function (state = initialState, action) {
         ...state,
         liked: state.liked.filter((album) => album.id !== action.payload),
       };
+    case "TOGGLE_MODAL":
+      return {
+        ...state,
+        showModal: action.payload,
+      };
     case "GENERATE_PLAYLIST":
       return {
         ...state,

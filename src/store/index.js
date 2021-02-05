@@ -13,6 +13,7 @@ const initialState = {
     password: "",
     email: "",
     playlists: [],
+    showModal: false,
   },
   player: {
     queue: [],

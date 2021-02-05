@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 
 const mapStateToProps = (state) => state;
 
@@ -10,6 +11,7 @@ const mapDispatchToProps = (dispatch) => ({
       type: "TOGGLE_LOADING",
       payload: load,
     }),
+
   assignAlbum: (id) =>
     dispatch(async (dispatch, getState) => {
       const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
@@ -80,7 +82,11 @@ class AlbumPage extends React.Component {
               <ul>
                 {songList.map((track) => (
                   <li className="d-flex justify-content-between">
-                    {track.title} <span>{track.duration}</span>
+                    {track.title}{" "}
+                    <span>
+                      <PlaylistAddIcon fontSize="small" />
+                      {track.duration}
+                    </span>
                   </li>
                 ))}
               </ul>
