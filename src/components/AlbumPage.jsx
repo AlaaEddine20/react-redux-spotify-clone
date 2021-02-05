@@ -1,78 +1,74 @@
 import React from "react";
-import Player from "../components/Player";
+import { connect } from "react-redux";
 
-class AlbumPage extends React.Component {
-  state = {
-    album: {},
-    tracks: [],
-    songSelected: null,
-    loading: true,
-  };
+const mapStateToProps = (state) => state;
 
-  fetchAlbum = async (id) => {
-    try {
+const mapDispatchToProps = (dispatch) => ({
+  toggleLoad: (load) =>
+    dispatch({
+      type: "TOGGLE_LOADING",
+      payload: load,
+    }),
+  assignAlbum: (id) =>
+    dispatch(async (dispatch, getState) => {
       const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
       const resp = await fetch(url + id, {
         headers: {
-          "x-rapidapi-key":
-            "7058b459femsh8bbc3e5e09ff45bp16ae10jsnaa8151340a4c",
+          "x-rapidapi-key": process.env.REACT_APP_API_KEY,
           "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
         },
       });
-      console.log(resp);
-      const respObj = await resp.json();
-      console.log(respObj);
-      this.setState({
-        album: respObj,
-        tracks: respObj.tracks.data,
-        loading: false,
+      let album = await resp.json();
+      dispatch({
+        type: "ASSIGN_CURRENT_ALBUM",
+        payload: album,
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    }),
+  populateSongs: (album) =>
+    dispatch({
+      type: "POPULATE_SONGS",
+      payload: album.tracks.data,
+    }),
+});
 
-  changeSong = (id) => this.setState({ songSelected: id });
-
+class AlbumPage extends React.Component {
   async componentDidMount() {
-    this.fetchAlbum(this.props.match.params.id);
+    this.props.toggleLoad(true);
+    await this.props.assignAlbum(164869492);
+    await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
+    this.props.toggleLoad(false);
   }
   render() {
-    const { album, loading, tracks } = this.state;
+    const { selectedAlbum, songList } = this.props.ui.songs;
 
     return (
       <>
-        {!loading && (
+        {!this.props.ui.loading && (
           <div className="album-page">
             <img
               style={{ marginLeft: 100, width: 400, height: 400 }}
-              src={album.cover_big}
+              src={selectedAlbum.cover_big}
               alt=""
             />
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>
-                {album.title}
+                {selectedAlbum.title}
               </h2>
               <ul>
-                {tracks.map((track) => (
+                {songList.map((track) => (
                   <li className="d-flex justify-content-between">
                     {track.title} <span>{track.duration}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <Player
-              songs={this.state.tracks}
-              songSelected={this.state.songSelected}
-              changeSong={this.changeSong}
-            />
           </div>
         )}
-        {loading && <h1>Loading...</h1>}
+        {this.props.ui.loading && <h1>Loading...</h1>}
       </>
     );
   }
 }
 
-export default AlbumPage;
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);
