@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
         }
       );
       let artists = await response.json();
-      console.log(artists.data);
+      // console.log(artists.data);
       dispatch({
         type: "POPULATE_ARTISTS",
         payload: artists.data,

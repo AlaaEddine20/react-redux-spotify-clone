@@ -332,6 +332,13 @@ p.subtitle{
   border: transparent;
   margin: 0 auto;
 }
+
+
+#track:hover {
+  cursor: pointer;
+  color: rgb(0, 170, 0);
+}
+
 .libTitle {
   color: white;
   font-size: 50px;
@@ -339,4 +346,5 @@ p.subtitle{
 .addPlayIcon {
   cursor: pointer;
 }
+
 

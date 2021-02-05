@@ -16,8 +16,9 @@ export const initialState = {
     showModal: false,
   },
   player: {
+    selectedSong: null,
     queue: [],
-    currentSong: {},
+    currentlyPlaying: false,
   },
   ui: {
     artists: {
