@@ -5,6 +5,31 @@ import { Button } from "react-bootstrap";
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
+  toggleLoad: (load) =>
+    dispatch({
+      type: "TOGGLE_LOADING",
+      payload: load,
+    }),
+  assignAlbum: (id) =>
+    dispatch(async (dispatch, getState) => {
+      const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
+      const resp = await fetch(url + id, {
+        headers: {
+          "x-rapidapi-key": process.env.REACT_APP_API_KEY,
+          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+        },
+      });
+      let album = await resp.json();
+      dispatch({
+        type: "ASSIGN_CURRENT_ALBUM",
+        payload: album,
+      });
+    }),
+  populateSongs: (album) =>
+    dispatch({
+      type: "POPULATE_SONGS",
+      payload: album.tracks.data,
+    }),
   addFavorite: (album) =>
     dispatch({ type: "ADD_TO_FAVOURITES", payload: album }),
   removeFavorite: (id) =>
@@ -12,49 +37,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class AlbumPage extends React.Component {
-  state = {
-    album: {},
-    tracks: [],
-    loading: true,
-  };
-
-  fetchAlbum = async (id) => {
-    try {
-      const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
-      const resp = await fetch(url + id, {
-        headers: {
-          "x-rapidapi-key":
-            "7058b459femsh8bbc3e5e09ff45bp16ae10jsnaa8151340a4c",
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-        },
-      });
-      console.log(resp);
-      const respObj = await resp.json();
-      console.log(respObj);
-
-      this.setState({
-        album: respObj,
-        tracks: respObj.tracks.data,
-        loading: false,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   async componentDidMount() {
-    this.fetchAlbum(this.props.match.params.id);
+    this.props.toggleLoad(true);
+    await this.props.assignAlbum(164869492);
+    await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
+    this.props.toggleLoad(false);
   }
   render() {
-    const { album, loading, tracks } = this.state;
+    const { selectedAlbum, songList } = this.props.ui.songs;
 
     return (
       <>
-        {!loading && (
+        {!this.props.ui.loading && (
           <div className="album-page">
             <img
               style={{ marginLeft: 100, width: 400, height: 400 }}
-              src={album.cover_big}
+              src={selectedAlbum.cover_big}
               alt=""
             />
             {this.props.users.find(
@@ -63,7 +61,7 @@ class AlbumPage extends React.Component {
               <Button
                 variant="danger"
                 onClick={() =>
-                  this.props.removeFavorite(this.props.user.liked.id)
+                  this.props.removeFavorite(selectedAlbum.id)
                 }
               >
                 Remove from liked list
@@ -71,7 +69,7 @@ class AlbumPage extends React.Component {
             ) : (
               <Button
                 variant="success"
-                onClick={() => this.props.addFavorite(this.album)}
+                onClick={() => this.props.addFavorite(selectedAlbum)}
               >
                 Add to favourite
               </Button>
@@ -79,10 +77,10 @@ class AlbumPage extends React.Component {
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>
-                {album.title}
+                {selectedAlbum.title}
               </h2>
               <ul>
-                {tracks.map((track) => (
+                {songList.map((track) => (
                   <li className="d-flex justify-content-between">
                     {track.title} <span>{track.duration}</span>
                   </li>
@@ -91,7 +89,7 @@ class AlbumPage extends React.Component {
             </div>
           </div>
         )}
-        {loading && <h1>Loading...</h1>}
+        {this.props.ui.loading && <h1>Loading...</h1>}
       </>
     );
   }
