@@ -1,69 +1,165 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Button, Modal, Col, Row, Container } from "react-bootstrap";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 
-class AlbumPage extends React.Component {
-  state = {
-    album: {},
-    tracks: [],
-    loading: true,
-  };
+const mapStateToProps = (state) => state;
 
-  fetchAlbum = async (id) => {
-    try {
+const mapDispatchToProps = (dispatch) => ({
+  toggleLoad: (load) =>
+    dispatch({
+      type: "TOGGLE_LOADING",
+      payload: load,
+    }),
+  showModal: (load) =>
+    dispatch({
+      type: "TOGGLE_MODAL",
+      payload: load,
+    }),
+  assignAlbum: (id) =>
+    dispatch(async (dispatch, getState) => {
       const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
       const resp = await fetch(url + id, {
         headers: {
-          "x-rapidapi-key":
-            "7058b459femsh8bbc3e5e09ff45bp16ae10jsnaa8151340a4c",
+          "x-rapidapi-key": process.env.REACT_APP_API_KEY,
           "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
         },
       });
-      console.log(resp);
-      const respObj = await resp.json();
-      console.log(respObj);
-      this.setState({
-        album: respObj,
-        tracks: respObj.tracks.data,
-        loading: false,
+      let album = await resp.json();
+      dispatch({
+        type: "ASSIGN_CURRENT_ALBUM",
+        payload: album,
       });
-    } catch (error) {
-      console.log(error);
-    }
+    }),
+  populateSongs: (album) =>
+    dispatch({
+      type: "POPULATE_SONGS",
+      payload: album.tracks.data,
+    }),
+  addFavorite: (album) =>
+    dispatch({ type: "ADD_TO_FAVOURITE", payload: album }),
+  removeFavorite: (id) =>
+    dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: id }),
+  nowPlaying: (song) => dispatch({ type: "NOW_PLAYING", payload: song }),
+});
+
+class AlbumPage extends React.Component {
+  state = {
+    selectedSong: null,
   };
 
   async componentDidMount() {
-    this.fetchAlbum(this.props.match.params.id);
+    this.props.toggleLoad(true);
+
+    await this.props.assignAlbum(this.props.match.params.id);
+    await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
+    this.props.toggleLoad(false);
   }
+
+  submitToPlaylist = async (index) => {};
+
   render() {
-    const { album, loading, tracks } = this.state;
+    const { selectedAlbum, songList } = this.props.ui.songs;
 
     return (
       <>
-        {!loading && (
+        {!this.props.ui.loading && (
           <div className="album-page">
-            <img
-              style={{ marginLeft: 100, width: 400, height: 400 }}
-              src={album.cover_big}
-              alt=""
-            />
+            <Container>
+              <img
+                style={{ marginLeft: 100, width: 400, height: 400 }}
+                src={selectedAlbum.cover_big}
+                alt=""
+              />
+
+              <Row>
+                {this.props.user.liked.find(
+                  (album) => album.id === selectedAlbum.id
+                ) ? (
+                  <Button
+                    style={{ marginLeft: 220 }}
+                    className="btn btn-lg mt-3 mb-1 "
+                    variant="danger"
+                    size="small"
+                    onClick={() => this.props.removeFavorite(selectedAlbum.id)}
+                  >
+                    Remove favorite
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ marginLeft: 220 }}
+                    className="btn btn-lg mt-3 mb-1 "
+                    variant="success"
+                    size="small"
+                    onClick={() => this.props.addFavorite(selectedAlbum)}
+                  >
+                    Add to favorite
+                  </Button>
+                )}
+              </Row>
+            </Container>
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>
-                {album.title}
+                {selectedAlbum.title}
               </h2>
               <ul>
-                {tracks.map((track) => (
-                  <li className="d-flex justify-content-between">
-                    {track.title} <span>{track.duration}</span>
+                {songList.map((track, index) => (
+                  <li
+                    key={index}
+                    onClick={() => this.props.nowPlaying(track)}
+                    id="track"
+                    className="d-flex justify-content-between"
+                  >
+                    {track.title}{" "}
+                    <span>
+                      <PlaylistAddIcon
+                        fontSize="small"
+                        onClick={() => this.props.showModal(true)}
+                      />
+                      {track.duration}
+                    </span>
                   </li>
                 ))}
               </ul>
             </div>
+            <Modal
+              show={this.props.user.showModal}
+              onHide={() => this.props.showModal(false)}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Select a playlist</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {this.props.user.playlists.length > 0 ? (
+                  this.props.user.playlists.map((playlist, index) => (
+                    <strong key={index}>
+                      {playlist.name}{" "}
+                      <PlaylistAddIcon
+                        fontSize="small"
+                        onClick={() => this.submitToPlaylist(index)}
+                      />
+                    </strong>
+                  ))
+                ) : (
+                  <span>You have no playlists</span>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => this.props.showModal(false)}
+                >
+                  Cancel
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         )}
-        {loading && <h1>Loading...</h1>}
+        {this.props.ui.loading && <h1>Loading...</h1>}
       </>
     );
   }
 }
 
-export default AlbumPage;
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

@@ -6,22 +6,32 @@ import thunk from "redux-thunk";
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const initialState = {
+export const initialState = {
   user: {
     liked: [],
     username: "",
     password: "",
     email: "",
-    playlist: [],
+    playlists: [],
+    showModal: false,
   },
   player: {
+    selectedSong: null,
     queue: [],
-    currentSong: {},
+    currentlyPlaying: false,
   },
   ui: {
-    artists: [],
+    artists: {
+      artistList: [],
+    },
     albums: [],
-    songs: [],
+    artist: {},
+    tracks: [],
+    songs: {
+      songList: [],
+      selectedAlbum: {},
+    },
+    loading: false,
   },
 };
 

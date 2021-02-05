@@ -286,3 +286,65 @@ body {
 #bottom-btn:hover {
   background-color: rgb(121, 120, 120);
 }
+
+
+.tracklist {
+    
+  margin-bottom:25px;
+  
+}
+
+
+.tracklist p:first-of-type{
+  color:rgb(231, 230, 230)
+}
+
+p.subtitle{
+ font-size:0.8em;
+ color:rgb(158, 158, 158)
+}
+.tracklist a{
+ color:rgb(158, 158, 158)
+}
+
+.artist-song-cover {
+  height: 45px;
+  width: 45px;
+  padding:5px;
+  object-fit: contain;
+}
+.track:hover{
+  background-color:  #606c6f
+}
+
+
+
+.genreSelect {
+  position: absolute;
+  top: 0.5rem;
+  left: 25%;
+  right: 0;
+}
+.genreSelect .list-group-item {
+  cursor: pointer;
+  background-color: transparent !important;
+  color: white;
+  border: transparent;
+  margin: 0 auto;
+}
+
+
+#track:hover {
+  cursor: pointer;
+  color: rgb(0, 170, 0);
+}
+
+.libTitle {
+  color: white;
+  font-size: 50px;
+}
+.addPlayIcon {
+  cursor: pointer;
+}
+
+
