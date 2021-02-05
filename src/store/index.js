@@ -12,7 +12,8 @@ const initialState = {
     username: "",
     password: "",
     email: "",
-    playlist: [],
+    playlists: [],
+    showModal: false,
   },
   player: {
     queue: [],
