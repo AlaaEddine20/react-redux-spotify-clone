@@ -12,7 +12,8 @@ export const initialState = {
     username: "",
     password: "",
     email: "",
-    playlist: [],
+    playlists: [],
+    showModal: false,
   },
   player: {
     queue: [],
@@ -23,12 +24,19 @@ export const initialState = {
       artistList: [],
     },
     albums: [],
+
+    artist:{},
+    tracks:[]
+
     songs: {
       songList: [],
       selectedAlbum: {},
     },
     loading: false,
+
   },
+
+
 };
 
 const combinedReducer = combineReducers({

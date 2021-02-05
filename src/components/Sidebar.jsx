@@ -23,7 +23,7 @@ class Sidebar extends React.Component {
                     this.props.location.pathname === prop.link ? "active" : ""
                   }
                   onClick={() => {
-                    console.log("active");
+
                     this.props.history.push(prop.link);
                   }}
                   className="sidebar-item"
