@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 
 const mapStateToProps = (state) => state;
@@ -11,7 +11,11 @@ const mapDispatchToProps = (dispatch) => ({
       type: "TOGGLE_LOADING",
       payload: load,
     }),
-
+  showModal: (load) =>
+    dispatch({
+      type: "TOGGLE_MODAL",
+      payload: load,
+    }),
   assignAlbum: (id) =>
     dispatch(async (dispatch, getState) => {
       const url = "https://deezerdevs-deezer.p.rapidapi.com/album/";
@@ -45,6 +49,9 @@ class AlbumPage extends React.Component {
     await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
     this.props.toggleLoad(false);
   }
+
+  submitToPlaylist = async (index) => {};
+
   render() {
     const { selectedAlbum, songList } = this.props.ui.songs;
 
@@ -80,17 +87,51 @@ class AlbumPage extends React.Component {
                 {selectedAlbum.title}
               </h2>
               <ul>
-                {songList.map((track) => (
-                  <li className="d-flex justify-content-between">
+                {songList.map((track, index) => (
+                  <li key={index} className="d-flex justify-content-between">
                     {track.title}{" "}
                     <span>
-                      <PlaylistAddIcon fontSize="small" />
+                      <PlaylistAddIcon
+                        fontSize="small"
+                        onClick={() => this.props.showModal(true)}
+                      />
                       {track.duration}
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
+            <Modal
+              show={this.props.user.showModal}
+              onHide={() => this.props.showModal(false)}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Select a playlist</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {this.props.user.playlists.length > 0 ? (
+                  this.props.user.playlists.map((playlist, index) => (
+                    <strong key={index}>
+                      {playlist.name}{" "}
+                      <PlaylistAddIcon
+                        fontSize="small"
+                        onClick={() => this.submitToPlaylist(index)}
+                      />
+                    </strong>
+                  ))
+                ) : (
+                  <span>You have no playlists</span>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => this.props.showModal(false)}
+                >
+                  Cancel
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         )}
         {this.props.ui.loading && <h1>Loading...</h1>}

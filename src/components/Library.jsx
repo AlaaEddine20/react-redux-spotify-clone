@@ -60,8 +60,8 @@ class Library extends Component {
         </Row>
         <Row>
           {this.props.user.playlists.length > 0 &&
-            this.props.user.playlists.map((playlist) => (
-              <Col xs={3}>
+            this.props.user.playlists.map((playlist, index) => (
+              <Col key={index} xs={3}>
                 <Card>
                   <Card.Header>{playlist.name}</Card.Header>
                   <ul>
