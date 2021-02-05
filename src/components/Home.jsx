@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Image, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Home extends React.Component {
   state = {
