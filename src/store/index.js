@@ -12,18 +12,28 @@ const initialState = {
     username: "",
     password: "",
     email: "",
-    playlist: [],
+    playlists: [],
+    showModal: false,
   },
   player: {
     queue: [],
     currentSong: {},
   },
   ui: {
-    artists: [],
+    artists: {
+      artistList: [],
+    },
     albums: [],
-    songs: [],
+
     artist:{},
     tracks:[]
+
+    songs: {
+      songList: [],
+      selectedAlbum: {},
+    },
+    loading: false,
+
   },
 
 

@@ -287,6 +287,7 @@ body {
   background-color: rgb(121, 120, 120);
 }
 
+
 .tracklist {
     
   margin-bottom:25px;
@@ -317,4 +318,25 @@ p.subtitle{
 }
 
 
+
+.genreSelect {
+  position: absolute;
+  top: 0.5rem;
+  left: 25%;
+  right: 0;
+}
+.genreSelect .list-group-item {
+  cursor: pointer;
+  background-color: transparent !important;
+  color: white;
+  border: transparent;
+  margin: 0 auto;
+}
+.libTitle {
+  color: white;
+  font-size: 50px;
+}
+.addPlayIcon {
+  cursor: pointer;
+}
 
