@@ -22,7 +22,11 @@ const initialState = {
     artists: [],
     albums: [],
     songs: [],
+    artist:{},
+    tracks:[]
   },
+
+
 };
 
 const combinedReducer = combineReducers({
