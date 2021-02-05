@@ -19,8 +19,11 @@ class Sidebar extends React.Component {
               return (
                 <li
                   key={key}
-                  id={window.location.pathname === prop.link ? "active" : ""}
+                  id={
+                    this.props.location.pathname === prop.link ? "active" : ""
+                  }
                   onClick={() => {
+
                     this.props.history.push(prop.link);
                   }}
                   className="sidebar-item"
