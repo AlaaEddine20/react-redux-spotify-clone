@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import NavbarData from "./NavbarData";
+import { withRouter } from "react-router-dom";
 
 class Navbar extends React.Component {
   render() {
@@ -11,9 +12,12 @@ class Navbar extends React.Component {
             {NavbarData.map((prop, key) => {
               return (
                 <li key={key}>
-                  <a className="mx-3" href={prop.link}>
+                  <span
+                    className="mx-3"
+                    onClick={() => this.props.history.push(prop.link)}
+                  >
                     {prop.title}
-                  </a>
+                  </span>
                 </li>
               );
             })}
@@ -24,4 +28,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);

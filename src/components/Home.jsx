@@ -80,7 +80,7 @@ class Home extends React.Component {
                 <Row className="albums-wrapper mx-2 my-3" key={key}>
                   <Col className="item-wrapper">
                     <Link
-                      to={`/album/${artist.id}`}
+                      to={`/artist/${artist.id}`}
                       style={{ textDecoration: "none", color: "lightgrey" }}
                     >
                       <Image className="album-cover" src={artist.picture} />
