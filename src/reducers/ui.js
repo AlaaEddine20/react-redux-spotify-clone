@@ -9,13 +9,26 @@ export default function (state = initialState, action) {
           artistList: action.payload,
         },
       };
+    case "POPULATE_SONGS":
+      return {
+        ...state,
+        songs: {
+          ...state.songs,
+          songList: action.payload,
+        },
+      };
+    case "ASSIGN_CURRENT_ALBUM":
+      return {
+        ...state,
+        songs: {
+          ...state.songs,
+          selectedAlbum: action.payload,
+        },
+      };
     case "TOGGLE_LOADING":
       return {
         ...state,
-        artists: {
-          ...state.artists,
-          loading: action.payload,
-        },
+        loading: action.payload,
       };
     default:
       return state;

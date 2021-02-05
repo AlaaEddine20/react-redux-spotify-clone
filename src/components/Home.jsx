@@ -45,7 +45,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { loading } = this.props.ui.artists;
+    const { loading } = this.props.ui;
     return (
       <div className="Home">
         <div className="main-page row mt-5">
