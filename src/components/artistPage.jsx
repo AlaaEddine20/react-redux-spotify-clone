@@ -67,7 +67,7 @@ const mapStateToProps = (state) => state;
         });
 
         const artist = await response.json();
-        console.log(artist);
+        console.log("artist:",artist);
            
         if (response.ok) {
           
@@ -94,12 +94,12 @@ class artistPage extends React.Component {
  
 
   async componentDidMount() {
-      console.log("Im from artist")
+     
     this.props.fetchArtistwithThunk(this.props.match.params.id);
     this.props.fetchTrackswithThunk(this.props.match.params.id)
   }
   render() {
-      console.log(this.props.ui.tracks)
+   
     
     const { artist,tracks} = this.props.ui;
    
@@ -109,13 +109,14 @@ class artistPage extends React.Component {
       <>
 
 
-<div className="mb-5" style={{ marginLeft: "20%" }}>
-<div className="min-vw-100 vh-10" style={{ left:"0px", height:"10%" }}>
+<div className="mb-5 min-vw-100" style={{ marginLeft: "20%" }}>
+<div className=" min-vw-100 vh-20">
 <img
-              style={{ objectFit:"cover"}}
+              style={{ objectFit:"contain"}}
               src={artist.picture_medium}
               alt=""
   />
+  </div>
   
   
   <h1 style={{ fontSize:"75px",color: "white", marginBottom: "30px" }}> {artist.name}</h1>
@@ -187,7 +188,7 @@ class artistPage extends React.Component {
 
   
 
-        </div>
+      
         </div>
       </>
     );
