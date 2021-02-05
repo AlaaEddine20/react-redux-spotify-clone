@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
 
 const mapStateToProps = (state) => state;
 
@@ -29,6 +30,10 @@ const mapDispatchToProps = (dispatch) => ({
       type: "POPULATE_SONGS",
       payload: album.tracks.data,
     }),
+  addFavorite: (album) =>
+    dispatch({ type: "ADD_TO_FAVOURITES", payload: album }),
+  removeFavorite: (id) =>
+    dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: id }),
 });
 
 class AlbumPage extends React.Component {
@@ -50,6 +55,25 @@ class AlbumPage extends React.Component {
               src={selectedAlbum.cover_big}
               alt=""
             />
+            {this.props.users.find(
+              (album) => album.id === this.props.user.liked.id
+            ) ? (
+              <Button
+                variant="danger"
+                onClick={() =>
+                  this.props.removeFavorite(selectedAlbum.id)
+                }
+              >
+                Remove from liked list
+              </Button>
+            ) : (
+              <Button
+                variant="success"
+                onClick={() => this.props.addFavorite(selectedAlbum)}
+              >
+                Add to favourite
+              </Button>
+            )}
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>
