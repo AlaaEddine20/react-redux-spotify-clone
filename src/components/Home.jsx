@@ -35,10 +35,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Home extends React.Component {
   async componentDidMount() {
-    this.props.toggleLoad(true);
-    await this.props.populateArtists(152);
-    this.props.toggleLoad(false);
+    this.genreSelect(152);
   }
+
+  genreSelect = async (genre) => {
+    this.props.toggleLoad(true);
+    await this.props.populateArtists(genre);
+    this.props.toggleLoad(false);
+  };
 
   render() {
     const { loading } = this.props.ui.artists;
@@ -58,16 +62,16 @@ class Home extends React.Component {
             <>
               <Row className="align-items-center justify-content-center genreSelect">
                 <ListGroup horizontal>
-                  <ListGroup.Item onClick={() => this.props.getGenre(152)}>
+                  <ListGroup.Item onClick={() => this.genreSelect(152)}>
                     Rock
                   </ListGroup.Item>
-                  <ListGroup.Item onClick={() => this.props.getGenre(132)}>
+                  <ListGroup.Item onClick={() => this.genreSelect(132)}>
                     Pop
                   </ListGroup.Item>
-                  <ListGroup.Item onClick={() => this.props.getGenre(116)}>
+                  <ListGroup.Item onClick={() => this.genreSelect(116)}>
                     Rap
                   </ListGroup.Item>
-                  <ListGroup.Item onClick={() => this.props.getGenre(129)}>
+                  <ListGroup.Item onClick={() => this.genreSelect(129)}>
                     Jazz
                   </ListGroup.Item>
                 </ListGroup>
