@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Modal, Col, Row, Container  } from "react-bootstrap";
+import { Button, Modal, Col, Row, Container } from "react-bootstrap";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-
 
 const mapStateToProps = (state) => state;
 
@@ -46,7 +45,8 @@ const mapDispatchToProps = (dispatch) => ({
 class AlbumPage extends React.Component {
   async componentDidMount() {
     this.props.toggleLoad(true);
-    await this.props.assignAlbum(164869492);
+
+    await this.props.assignAlbum(this.props.match.params.id);
     await this.props.populateSongs(this.props.ui.songs.selectedAlbum);
     this.props.toggleLoad(false);
   }
@@ -60,7 +60,6 @@ class AlbumPage extends React.Component {
       <>
         {!this.props.ui.loading && (
           <div className="album-page">
-
             <Container>
               <img
                 style={{ marginLeft: 100, width: 400, height: 400 }}
@@ -96,7 +95,6 @@ class AlbumPage extends React.Component {
                 </Col>
               </Row>
             </Container>
-
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>
