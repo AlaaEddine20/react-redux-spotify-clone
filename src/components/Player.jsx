@@ -8,20 +8,16 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import { Grid, Slider } from "@material-ui/core";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 import { connect } from "react-redux";
+import playerIcon from "../logo/playing.png";
 
 const mapStateToProps = (state) => state;
 
 class Player extends React.Component {
   render() {
-    console.log(this.props.player.selectedSong);
     return this.props.player.selectedSong ? (
       <div className="player-wrapper">
         <div className="player-left">
-          <Image
-            className="player-song-cover"
-            src="https://upload.wikimedia.org/wikipedia/en/4/42/Relapse_%28album%29.jpg"
-            alt=""
-          />
+          <Image className="player-song-cover" src={playerIcon} alt="" />
           <div className="player-song-info ml-2 my-auto">
             <h4>{this.props.player.selectedSong.artist.name}</h4>
             <p>{this.props.player.selectedSong.title}</p>

@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 class AlbumPage extends React.Component {
   state = {
-    songSelected: null,
+    selectedSong: null,
   };
 
   async componentDidMount() {
@@ -85,6 +85,7 @@ class AlbumPage extends React.Component {
               <ul>
                 {songList.map((track) => (
                   <li
+                    id="track"
                     onClick={() => this.props.nowPlaying(track)}
                     className="d-flex justify-content-between"
                   >
