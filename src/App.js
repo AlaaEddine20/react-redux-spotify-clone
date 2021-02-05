@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Sidebar from "./components/Sidebar";
 import Player from "./components/Player";
 import AlbumPage from "./components/AlbumPage";
+import artistPage from "./components/artistPage";
 import SignUp from "./components/SignUp";
 import Library from "./components/Library";
 
@@ -17,6 +18,7 @@ class App extends React.Component {
 
         <Route exact path="/" component={Home} />
         <Route path="/album/:id" component={AlbumPage} />
+        <Route extact path="/artist/:id" component={artistPage} />
         {this.props.location.pathname !== "/signup" && <Player />}
         <Route exact path="/library" component={Library} />
 

@@ -24,12 +24,19 @@ const initialState = {
       artistList: [],
     },
     albums: [],
+
+    artist:{},
+    tracks:[]
+
     songs: {
       songList: [],
       selectedAlbum: {},
     },
     loading: false,
+
   },
+
+
 };
 
 const combinedReducer = combineReducers({
