@@ -1,10 +1,22 @@
 import initialState from "../store";
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "ADD_TO_FAVOURITES":
-      return state.concat(action.payload);
-    case "REMOVE_FROM_FAVOURITES":
-      return state.filter((job) => job.id !== action.payload);
+    case "POPULATE_ARTISTS":
+      return {
+        ...state,
+        artists: {
+          ...state.artists,
+          artistList: action.payload,
+        },
+      };
+    case "TOGGLE_LOADING":
+      return {
+        ...state,
+        artists: {
+          ...state.artists,
+          loading: action.payload,
+        },
+      };
     default:
       return state;
   }
