@@ -300,3 +300,10 @@ body {
   border: transparent;
   margin: 0 auto;
 }
+.libTitle {
+  color: white;
+  font-size: 50px;
+}
+.addPlayIcon {
+  cursor: pointer;
+}
