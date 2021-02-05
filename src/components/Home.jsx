@@ -80,19 +80,11 @@ class Home extends React.Component {
                 <Row className="albums-wrapper mx-2 my-3" key={key}>
                   <Col className="item-wrapper">
                     <Link
-                      to={`/album/${artist.id}`}
+                      to={`/artist/${artist.id}`}
                       style={{ textDecoration: "none", color: "lightgrey" }}
                     >
                       <Image className="album-cover" src={artist.picture} />
                       <h4 className="d-flex justify-content-center mt-2 album-title">
-                        {artist.name}
-                      </h4>
-                    </Link>
-                    <Link
-                      to={`/artist/${artist.id}`}
-                      style={{ textDecoration: "none", color: "lightgrey" }}
-                    >
-                      <h4 className="d-flex justify-content-center  text-muted mt-2 album-title">
                         {artist.name}
                       </h4>
                     </Link>
