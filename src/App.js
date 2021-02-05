@@ -14,7 +14,7 @@ class App extends React.Component {
       <div className="main-components d-flex">
         <Sidebar />
         <Router>
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route extact path="/album/:id" component={AlbumPage} />
         </Router>
         <Route exact path="/signup" component={SignUp} />
