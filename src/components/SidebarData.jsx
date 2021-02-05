@@ -19,7 +19,7 @@ const Sidebardata = [
   {
     title: "Library",
     icon: <LibraryMusicIcon />,
-    link: "/library",
+    link: "/liked",
   },
 
   // {

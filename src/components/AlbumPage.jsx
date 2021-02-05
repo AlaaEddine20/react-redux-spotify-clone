@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row, Container } from "react-bootstrap";
 
 const mapStateToProps = (state) => state;
 
@@ -31,9 +31,9 @@ const mapDispatchToProps = (dispatch) => ({
       payload: album.tracks.data,
     }),
   addFavorite: (album) =>
-    dispatch({ type: "ADD_TO_FAVOURITES", payload: album }),
+    dispatch({ type: "ADD_TO_FAVOURITE", payload: album }),
   removeFavorite: (id) =>
-    dispatch({ type: "REMOVE_FROM_FAVOURITES", payload: id }),
+    dispatch({ type: "REMOVE_FROM_FAVOURITE", payload: id }),
 });
 
 class AlbumPage extends React.Component {
@@ -50,28 +50,41 @@ class AlbumPage extends React.Component {
       <>
         {!this.props.ui.loading && (
           <div className="album-page">
-            <img
-              style={{ marginLeft: 100, width: 400, height: 400 }}
-              src={selectedAlbum.cover_big}
-              alt=""
-            />
-            {this.props.user.liked.find(
-              (album) => album.id === this.props.user.liked.id
-            ) ? (
-              <Button
-                variant="danger"
-                onClick={() => this.props.removeFavorite(selectedAlbum.id)}
-              >
-                Remove from liked list
-              </Button>
-            ) : (
-              <Button
-                variant="success"
-                onClick={() => this.props.addFavorite(selectedAlbum)}
-              >
-                Add to favourite
-              </Button>
-            )}
+            <Container>
+              <img
+                style={{ marginLeft: 100, width: 400, height: 400 }}
+                src={selectedAlbum.cover_big}
+                alt=""
+              />
+
+              <Row>
+                <Col>
+                  {this.props.user.liked.find(
+                    (album) => album.id === selectedAlbum.id
+                  ) ? (
+                    <Button
+                      className="btn btn-lg mt-3 mb-1"
+                      variant="danger"
+                      size="small"
+                      onClick={() =>
+                        this.props.removeFavorite(selectedAlbum.id)
+                      }
+                    >
+                      Remove from favorite
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn btn-lg mt-3 mb-1"
+                      variant="success"
+                      size="small"
+                      onClick={() => this.props.addFavorite(selectedAlbum)}
+                    >
+                      Add to favorite
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+            </Container>
 
             <div className="track-list ml-5">
               <h2 style={{ color: "white", marginBottom: 30 }}>

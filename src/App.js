@@ -7,16 +7,18 @@ import Sidebar from "./components/Sidebar";
 import Player from "./components/Player";
 import AlbumPage from "./components/AlbumPage";
 import SignUp from "./components/SignUp";
+import LikedAlbums from "./components/LikedAlbums";
 
 class App extends React.Component {
   render() {
     return (
       <div className="main-components d-flex">
         <Sidebar />
-        <Router>
-          <Route exact path="/" component={Home} />
-          <Route extact path="/album/:id" component={AlbumPage} />
-        </Router>
+
+        <Route exact path="/" component={Home} />
+        <Route exact path="/album/:id" component={AlbumPage} />
+        <Route exact path="/liked" component={LikedAlbums} />
+
         <Route exact path="/signup" component={SignUp} />
         <Player />
       </div>

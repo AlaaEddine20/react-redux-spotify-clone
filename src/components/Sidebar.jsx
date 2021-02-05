@@ -4,6 +4,7 @@ import { Image } from "react-bootstrap";
 import SidebarData from "./SidebarData";
 import logo from "../logo/Spotify_Logo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { withRouter } from "react-router-dom";
 
 class Sidebar extends React.Component {
   render() {
@@ -18,9 +19,12 @@ class Sidebar extends React.Component {
               return (
                 <li
                   key={key}
-                  id={window.location.pathname === prop.link ? "active" : ""}
+                  id={
+                    this.props.location.pathname === prop.link ? "active" : ""
+                  }
                   onClick={() => {
-                    window.location.pathname = prop.link;
+                    console.log("active");
+                    this.props.history.push(prop.link);
                   }}
                   className="sidebar-item"
                 >
@@ -54,4 +58,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);
