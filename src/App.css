@@ -6,6 +6,8 @@
 
 body::-webkit-scrollbar {
   display: none;
+  width: 100vw;
+  min-width: 760px;
 }
 
 body {
@@ -287,37 +289,31 @@ body {
   background-color: rgb(121, 120, 120);
 }
 
-
 .tracklist {
-    
-  margin-bottom:25px;
-  
+  margin-bottom: 25px;
 }
 
-
-.tracklist p:first-of-type{
-  color:rgb(231, 230, 230)
+.tracklist p:first-of-type {
+  color: rgb(231, 230, 230);
 }
 
-p.subtitle{
- font-size:0.8em;
- color:rgb(158, 158, 158)
+p.subtitle {
+  font-size: 0.8em;
+  color: rgb(158, 158, 158);
 }
-.tracklist a{
- color:rgb(158, 158, 158)
+.tracklist a {
+  color: rgb(158, 158, 158);
 }
 
 .artist-song-cover {
   height: 45px;
   width: 45px;
-  padding:5px;
+  padding: 5px;
   object-fit: contain;
 }
-.track:hover{
-  background-color:  #606c6f
+.track:hover {
+  background-color: #606c6f;
 }
-
-
 
 .genreSelect {
   position: absolute;
@@ -333,7 +329,6 @@ p.subtitle{
   margin: 0 auto;
 }
 
-
 #track:hover {
   cursor: pointer;
   color: rgb(0, 170, 0);
@@ -346,5 +341,3 @@ p.subtitle{
 .addPlayIcon {
   cursor: pointer;
 }
-
-

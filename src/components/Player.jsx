@@ -17,7 +17,11 @@ class Player extends React.Component {
     return this.props.player.selectedSong ? (
       <div className="player-wrapper">
         <div className="player-left">
-          <Image className="player-song-cover" src={playerIcon} alt="" />
+          <Image
+            className="player-song-cover"
+            src={this.props.ui.songs.selectedAlbum.cover_small}
+            alt=""
+          />
           <div className="player-song-info ml-2 my-auto">
             <h4>{this.props.player.selectedSong.artist.name}</h4>
             <p>{this.props.player.selectedSong.title}</p>
@@ -47,7 +51,7 @@ class Player extends React.Component {
         </div>
       </div>
     ) : (
-      <div>No song selected</div>
+      <div></div>
     );
   }
 }

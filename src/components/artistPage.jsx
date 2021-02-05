@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 
-
 const mapDispatchToProps = (dispatch) => ({
   fetchTrackswithThunk: (id) =>
     dispatch(async (dispatch) => {
@@ -22,13 +21,12 @@ const mapDispatchToProps = (dispatch) => ({
       });
 
       const tracks = await response.json();
-      console.log("tracks:", tracks.data);
+      // console.log("tracks:", tracks.data);
 
       if (response.ok) {
         dispatch({
           type: "SET_TOP_ALBUMS",
           payload: tracks.data,
-
         });
       } else {
         dispatch({
@@ -103,12 +101,7 @@ class artistPage extends React.Component {
     this.props.fetchAlbumswithThunk(this.props.match.params.id);
   }
   render() {
-
-    
-    const { artist,tracks} = this.props.ui;
-
-   
-
+    const { artist, tracks } = this.props.ui;
 
     return (
       <>
