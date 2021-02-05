@@ -70,32 +70,34 @@ class artistPage extends React.Component {
 
       <>
 
+
+<div className="mb-5" style={{ marginLeft: "20%" }}>
+<div className="min-vw-100 vh-10" style={{ left:"0px", height:"10%" }}>
 <img
               style={{ objectFit:"cover"}}
               src={artist.picture_medium}
               alt=""
   />
-<div style={{ marginLeft: "20%" }}>
-<div className="min-vw-100 vh-10" style={{ left:"0px", height:"10%" }}>
   
   
   <h1 style={{ fontSize:"75px",color: "white", marginBottom: "30px" }}> {artist.name}</h1>
   <FaPlayCircle style={{color:"green",fontSize:"40px"}} />
   <AiOutlineHeart style={{color:"white",fontSize:"40px"}}/>
+ 
 
 
-<Row className="mt-5">
+<Row className="mt-5 mb-5">
 <Col md={7}  >
 
-<div className="tracklist pr-3 p-1 " style={{borderBottom:"1px solid gray" }}>
+<div className="tracklist pr-3 p-1 ">
 <h5 style={{ color: "white", marginBottom: 30 }}>
                Popular 
               </h5>
 
-{tracks.map((track) => (
+{tracks.slice(0,10).map((track) => (
 
 
-<div className="d-flex">
+<div className="d-flex track"  >
 <Image
           className="artist-song-cover"
           src={track.album.cover_small}
@@ -137,31 +139,8 @@ class artistPage extends React.Component {
 </Row>
 
   
-  
-</div>
-        {/* {!loading && (
-          <div className="album-page">
-            <img
-              style={{ marginLeft: 100, width: 400, height: 400 }}
-              src={album.cover_big}
-              alt=""
-            />
 
-            <div className="track-list ml-5">
-              <h2 style={{ color: "white", marginBottom: 30 }}>
-                {album.title}
-              </h2>
-              <ul>
-                {tracks.map((track) => (
-                  <li className="d-flex justify-content-between">
-                    {track.title} <span>{track.duration}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )} */}
-        {/* {loading && <h1>Loading...</h1>} */}
+        </div>
         </div>
       </>
     );

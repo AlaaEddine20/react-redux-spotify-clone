@@ -312,6 +312,9 @@ p.subtitle{
   padding:5px;
   object-fit: contain;
 }
+.track:hover{
+  background-color:  #606c6f
+}
 
 
 /* button.btn-play {
