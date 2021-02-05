@@ -42,7 +42,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: action.payload,
       };
-
+    
     default:
       return state;
   }

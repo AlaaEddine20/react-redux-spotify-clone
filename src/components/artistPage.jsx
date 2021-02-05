@@ -7,22 +7,9 @@ import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
   
   const mapDispatchToProps = (dispatch) => ({
-    setLocation: (location) =>
-    // fetch the data
-    dispatch(
-      {
-        type: "SET_LOCATION",
-        payload: location,
-      }
-    ),
-    setPosition: (position) =>
-    // fetch the data
-    dispatch(
-      {
-        type: "SET_POSITION",
-        payload: position,
-      }
-    ),
+  
+
+
     fetchTrackswithThunk: (id) =>
     dispatch(async (dispatch) => {
       
@@ -44,6 +31,10 @@ const mapStateToProps = (state) => state;
           type: "SET_TOP_ALBUMS",
           payload: tracks.data,
         })
+
+       
+
+        
       } else {
         dispatch(
           {
@@ -102,6 +93,7 @@ class artistPage extends React.Component {
    
     
     const { artist,tracks} = this.props.ui;
+
    
 
     return (
