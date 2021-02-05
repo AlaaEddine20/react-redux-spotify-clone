@@ -13,6 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="main-components d-flex">
+        
         <Sidebar />
         <Router>
           <Route exact path="/" component={Home} />
