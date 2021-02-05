@@ -45,7 +45,6 @@ class Home extends React.Component {
   };
 
   render() {
-
     const { loading } = this.props.ui;
     return (
       <div className="Home">
@@ -86,17 +85,17 @@ class Home extends React.Component {
                     >
                       <Image className="album-cover" src={artist.picture} />
                       <h4 className="d-flex justify-content-center mt-2 album-title">
-
                         {artist.name}
                       </h4>
-
                     </Link>
-                    <Link  to={`/artist/${album.artist.id}`}
-                      style={{ textDecoration: "none", color: "lightgrey" }}>
-                        <h4 className="d-flex justify-content-center  text-muted mt-2 album-title">
-                        {album.artist.name}</h4>
-                   </Link>
-                    
+                    <Link
+                      to={`/artist/${artist.id}`}
+                      style={{ textDecoration: "none", color: "lightgrey" }}
+                    >
+                      <h4 className="d-flex justify-content-center  text-muted mt-2 album-title">
+                        {artist.name}
+                      </h4>
+                    </Link>
                   </Col>
                 </Row>
               ))}
