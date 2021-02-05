@@ -19,7 +19,10 @@ const initialState = {
     currentlyPlaying: false,
   },
   ui: {
-    artists: [],
+    artists: {
+      loading: false,
+      artistList: [],
+    },
     albums: [],
     songs: [],
   },

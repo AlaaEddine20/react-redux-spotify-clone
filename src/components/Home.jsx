@@ -1,50 +1,91 @@
 import React from "react";
-import { Row, Image, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Row, Image, Col, Spinner, ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleLoad: (load) =>
+    dispatch({
+      type: "TOGGLE_LOADING",
+      payload: load,
+    }),
+  populateArtists: (genre) =>
+    dispatch(async (dispatch, getState) => {
+      let response = await fetch(
+        `https://deezerdevs-deezer.p.rapidapi.com/genre/` + genre + `/artists`,
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": process.env.REACT_APP_API_KEY,
+            "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+          },
+        }
+      );
+      let artists = await response.json();
+      console.log(artists.data);
+      dispatch({
+        type: "POPULATE_ARTISTS",
+        payload: artists.data,
+      });
+    }),
+});
 
 class Home extends React.Component {
-  state = {
-    albums: [],
-    loading: true,
-  };
-
   async componentDidMount() {
-    const getAlbums = await fetch(
-      "https://deezerdevs-deezer.p.rapidapi.com/search?q=vinnie%20paz",
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "7058b459femsh8bbc3e5e09ff45bp16ae10jsnaa8151340a4c",
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-        },
-      }
-    );
-    const data = await getAlbums.json();
-    console.log(data);
-    this.setState({ albums: data, loading: false });
+    this.genreSelect(152);
   }
 
+  genreSelect = async (genre) => {
+    this.props.toggleLoad(true);
+    await this.props.populateArtists(genre);
+    this.props.toggleLoad(false);
+  };
+
   render() {
-    const { loading } = this.state;
+    const { loading } = this.props.ui.artists;
     return (
       <div className="Home">
         <div className="main-page row mt-5">
           {loading ? (
-            <h4>{loading}</h4>
+            <h4>
+              {" "}
+              <Spinner
+                className="albums-wrapper mx-2 my-3"
+                animation="border"
+                variant="success"
+              />
+            </h4>
           ) : (
             <>
-              {this.state.albums.data.map((album, key) => (
+              <Row className="align-items-center justify-content-center genreSelect">
+                <ListGroup horizontal>
+                  <ListGroup.Item onClick={() => this.genreSelect(152)}>
+                    Rock
+                  </ListGroup.Item>
+                  <ListGroup.Item onClick={() => this.genreSelect(132)}>
+                    Pop
+                  </ListGroup.Item>
+                  <ListGroup.Item onClick={() => this.genreSelect(116)}>
+                    Rap
+                  </ListGroup.Item>
+                  <ListGroup.Item onClick={() => this.genreSelect(129)}>
+                    Jazz
+                  </ListGroup.Item>
+                </ListGroup>
+              </Row>
+              {this.props.ui.artists.artistList.map((artist, key) => (
                 <Row className="albums-wrapper mx-2 my-3" key={key}>
                   <Col className="item-wrapper">
                     <Link
-                      to={`/album/${album.album.id}`}
+                      to={`/album/${artist.id}`}
                       style={{ textDecoration: "none", color: "lightgrey" }}
                     >
-                      <Image className="album-cover" src={album.album.cover} />
+                      <Image className="album-cover" src={artist.picture} />
                       <h4 className="d-flex justify-content-center mt-2 album-title">
-                        {album.album.title}
+                        {artist.name}
                       </h4>
                     </Link>
                   </Col>
@@ -58,4 +99,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
