@@ -19,9 +19,15 @@ const initialState = {
     currentSong: {},
   },
   ui: {
-    artists: [],
+    artists: {
+      artistList: [],
+    },
     albums: [],
-    songs: [],
+    songs: {
+      songList: [],
+      selectedAlbum: {},
+    },
+    loading: false,
   },
 };
 
