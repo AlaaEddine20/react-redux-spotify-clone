@@ -6,7 +6,7 @@ export default function (state = initialState, action) {
         ...state,
         liked: state.liked.concat(action.payload),
       };
-    case "REMOVE_FROM_FAVOURITE":
+    case "REMOVE_FROM_FAVOURITES":
       return {
         ...state,
         liked: state.liked.filter((album) => album.id !== action.payload),
